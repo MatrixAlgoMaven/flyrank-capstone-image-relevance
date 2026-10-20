@@ -2,6 +2,7 @@ import pytest
 from pydantic import ValidationError
 
 from src.app.schemas import ImageMetadata
+from src.app.services.metadata_service import validate_image_metadata
 
 
 def test_valid_image_metadata():
@@ -47,3 +48,15 @@ def test_empty_caption_is_rejected():
             caption="",
             confidence=0.9,
         )
+
+def test_metadata_service_rejects_invalid_confidence():
+    data = {
+        "subject": "red fox",
+        "category": "animal",
+        "attributes": ["red fur"],
+        "caption": "A fox in grass",
+        "confidence": 1.5,
+    }
+
+    with pytest.raises(ValidationError):
+        validate_image_metadata(data)
