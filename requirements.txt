@@ -1,0 +1,12 @@
+
+fastapi
+uvicorn[standard]
+pydantic-settings
+google-genai
+sqlalchemy
+psycopg[binary]
+alembic
+pgvector
+tenacity
+httpx
+pytest

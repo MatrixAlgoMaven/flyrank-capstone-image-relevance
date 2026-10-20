@@ -1,0 +1,26 @@
+
+project:
+  name: flyrank-capstone-image-relevance
+  title: AI Image Understanding & Content Matching Engine
+  track: FlyRank Backend Track
+  language: Python
+  framework: FastAPI
+
+goals:
+  - structured_image_metadata
+  - semantic_image_matching
+  - mismatch_guard
+  - background_jobs_with_retries
+  - ai_call_cost_tracking
+  - human_review_api
+
+dataset:
+  target_images: 50
+  minimum_categories: 4
+  minimum_labeled_posts: 10
+
+evaluation:
+  primary_metric: top1_precision
+  require_no_confident_match: true
+
+status: in_progress
