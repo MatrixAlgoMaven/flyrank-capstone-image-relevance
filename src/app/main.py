@@ -1,8 +1,12 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from pydantic import ValidationError
 
-from src.app.schemas import ImageMetadata
-from src.app.services.metadata_service import validate_image_metadata
+from .schemas import ImageMetadata
+from .services.metadata_service import validate_image_metadata
+from .services.image_service import (
+    MAX_IMAGE_SIZE,
+    validate_image_file,
+)
 
 app = FastAPI(
     title="AI Image Understanding & Content Matching Engine",
@@ -22,3 +26,19 @@ def validate_metadata(data: dict):
         return validate_image_metadata(data)
     except ValidationError as exc:
         raise HTTPException(status_code=422, detail=exc.errors()) from exc
+
+@app.post("/images/validate")
+async def validate_uploaded_image(file: UploadFile = File(...)):
+    try:
+        content = await file.read(MAX_IMAGE_SIZE + 1)
+
+        return validate_image_file(
+            filename=file.filename or "unknown",
+            content=content,
+        )
+
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    finally:
+        await file.close()

@@ -10,3 +10,5 @@ pgvector
 tenacity
 httpx
 pytest
+python-multipart
+Pillow

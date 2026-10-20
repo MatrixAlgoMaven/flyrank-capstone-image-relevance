@@ -1,4 +1,4 @@
-from src.app.schemas import ImageMetadata
+from ..schemas import ImageMetadata
 
 
 def validate_image_metadata(data: dict) -> ImageMetadata:
